@@ -1,0 +1,25 @@
+# formula を、利用者と同じ手順（brew install）で入れて動かす。
+# 手元の Mac の CLT が古くて brew install が通らなかったので、きれいな macOS で確かめる。
+name: Test formulae
+
+on:
+  push:
+    paths: ['Formula/**', '.github/workflows/test.yml']
+  workflow_dispatch:
+
+jobs:
+  install:
+    runs-on: macos-15
+    steps:
+      - name: brew install
+        run: |
+          brew tap mr-tabata/tap
+          brew install mr-tabata/tap/mrdiff
+      - name: brew test
+        run: brew test mrdiff
+      - name: 動かす
+        run: |
+          printf 'a\n' > a.txt; printf 'b\n' > b.txt
+          mrdiff a.txt b.txt --no-pager --color=never
+          mrdiff --json a.txt b.txt
+          MRDIFF_LANG=ja mrdiff a.txt a.txt
