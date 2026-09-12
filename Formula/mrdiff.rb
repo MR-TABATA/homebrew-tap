@@ -1,0 +1,24 @@
+class Mrdiff < Formula
+  desc "Do they differ, and where — images, binaries, URLs, sites, SSH, and text"
+  homepage "https://mr-tabata.github.io/MrDiff/"
+  url "https://github.com/MR-TABATA/MrDiff/releases/download/v0.1.0/mrdiff-0.1.0-macos.zip"
+  sha256 "65a29898b9e790e3dd52125c3f99f24e09b7b53a4fbd026f83f59c6aeb2dbe95"
+  version "0.1.0"
+  license "MIT"
+
+  depends_on :macos => :ventura # Package.swift の platforms（.v13）と同じ
+
+  def install
+    # バイナリ 1 つでは動かない。SPM のリソースバンドルが実行ファイルの隣に要る
+    # （scripts/release.sh の注記）。両方を libexec に置き、bin にはリンクだけ張る。
+    libexec.install "mrdiff", "MrDiff_MrDiffCore.bundle"
+    bin.install_symlink libexec/"mrdiff"
+  end
+
+  test do
+    (testpath/"a.txt").write "one\n"
+    (testpath/"b.txt").write "two\n"
+    assert_match "changed", shell_output("#{bin}/mrdiff --exit-code a.txt b.txt", 1)
+    assert_match "No differences", shell_output("#{bin}/mrdiff a.txt a.txt")
+  end
+end
