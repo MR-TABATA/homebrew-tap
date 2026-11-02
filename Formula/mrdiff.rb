@@ -13,6 +13,7 @@ class Mrdiff < Formula
     # （scripts/release.sh の注記）。両方を libexec に置き、bin にはリンクだけ張る。
     libexec.install "mrdiff", "MrDiff_MrDiffCore.bundle"
     bin.install_symlink libexec/"mrdiff"
+    bin.install_symlink libexec/"MrDiff_MrDiffCore.bundle"
 
     # `mrdiff --completions bash|zsh|fish` prints the script (0.8.0 and later).
     (bash_completion/"mrdiff").write Utils.safe_popen_read(bin/"mrdiff", "--completions", "bash")
