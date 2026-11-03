@@ -1,6 +1,6 @@
 class Mrdiff < Formula
   desc "Do they differ, and where — images, PDFs, Word, fonts, archives, folders, URLs, sites, SSH, and text"
-  homepage "https://mr-tabata.github.io/MrDiff/"
+  homepage "https://mrktools.app/en/diff/"
   url "https://github.com/MR-TABATA/MrDiff/releases/download/v0.9.0/mrdiff-0.9.0-macos.zip"
   sha256 "2318176766cc30056fdd0f9679ff4910823432a07c62561216c987cd446f4f54"
   version "0.9.0"
